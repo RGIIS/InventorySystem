@@ -34,6 +34,7 @@ Route::get('/sales/monthly',[App\Http\Controllers\SalesController::class, 'showM
 Route::get('/sales/daily',[App\Http\Controllers\SalesController::class, 'showDailySales'])->name('daily_sales');
 Route::get('/sales/detailed',[App\Http\Controllers\SalesController::class, 'showDetailedSales'])->name('detailed_sales');
 Route::get('/accounts',[App\Http\Controllers\UserController::class, 'accounts'])->name('accounts');
+Route::get('/updateVersion',[App\Http\Controllers\UserController::class, 'updateVersion'])->name('updateVersion');
 Route::get('/logs',[App\Http\Controllers\UserController::class, 'logs'])->name('logs');
 
 //FUNCTIONS

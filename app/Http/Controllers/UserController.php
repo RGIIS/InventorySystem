@@ -436,4 +436,17 @@ public function removeAdmin(Request $request)
 
 }
 
+public function updateVersion()
+{
+    if(exec('git pull https://github.com/RGIIS/InventorySystem.git',$output))
+        {
+            return response($output[0],200);
+           
+        }
+    else{
+        return response('Error',400);
+    }
+        
+}
+
 }

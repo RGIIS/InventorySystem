@@ -19,6 +19,14 @@
     
         <div class="content">
           <div class="container-fluid">
+            @if (session()->has('message'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+              {{session('message')}}
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            @endif
             <div class="row">
               <div class="col-lg-4 col-md-8 col-sm-8">
                 <div class="card card-stats">

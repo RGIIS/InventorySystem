@@ -18,7 +18,9 @@
 
 {{-- <link rel="stylesheet" type="text/css" href="fonts/iconic/css/material-design-iconic-font.min.css"> --}}
   <!-- CSS Files -->
+  <link rel="stylesheet" href={{ asset('/css/overlay-loading.css') }}>
   <link href={{ asset('/css/material-dashboard.css?v=2.1.2') }} rel="stylesheet" />
+  <script src={{asset('/js/updateVersion.js')}} defer></script>
   @yield('script')
  <style type="text/css">
    .dropdown-toggle::after {
@@ -30,7 +32,14 @@
  </style>
 </head>
 <body class="">
+  <div class="overlay" id="overlay" hidden>
+    <div class="overlay__inner" >
+        <div class="overlay__content" ><span class="spinner"></span> <h3 class="text-center" style="color:white !important; padding:0px !important;">Checking for update... Please wait</h3></div>
+        
+    </div>
+  </div>
     <div class="wrapper ">
+     
       <div class="sidebar" data-color="purple" data-background-color="white" >
         <!--
           Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
@@ -111,7 +120,7 @@
                   </a>
                   <form class='navbar-form'>
                   <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">
-                    <a class="dropdown-item" href="#">Profile</a>
+                    <a class="dropdown-item" href="#" onclick="checkUpdate()">Check for update</a>
                     <a class="dropdown-item" href="/logout">Log out</a>
                     <div class="dropdown-divider"></div>
                   </div>
