@@ -3,6 +3,8 @@ updateContainer = document.getElementById('newUpdate');
 newVersionNumber = document.getElementById('newVersion');
 getUpdateBtn = document.getElementById('getUpdate');
 
+
+
 function checkUpdate(){
     overlayLoading.hidden=false;
     $.ajaxSetup({
@@ -33,6 +35,7 @@ function checkUpdate(){
             
                document.getElementById('updateAlert').hidden=false;
                document.getElementById('updateMessage').innerHTML = response.message;
+               
            }
         },
         error: function(response)
@@ -43,7 +46,7 @@ function checkUpdate(){
         }
     });
 
-
+    setTimeout(function(){document.getElementById('updateAlert').hidden=true},5000);
         
 
 
@@ -51,6 +54,7 @@ function checkUpdate(){
 
 function getUpdate()
 {
+    updateContainer.hidden=true;
     overlayLoading.hidden=false;
     loadingMsg = document.getElementById('loadingMsg');
     loadingMsg.innerHTML = 'Getting Update .... Please Wait';
@@ -68,13 +72,13 @@ function getUpdate()
 
         success: function(response){
         overlayLoading.hidden=true;
-        console.log(response);
+        document.getElementById('updateAlert').hidden=false;
+        document.getElementById('updateMessage').innerHTML = response;
         },
         error: function(response)
         {
             overlayLoading.hidden=true;
-            console.log('error');
-            console.log(response);
+            alert('Something Went Wrong')
         }
     });
 }

@@ -478,10 +478,11 @@ public function checkUpdate()
 public function updateVersion()
 {
    
-  
-    if(exec('git pull origin/master ',$output)!=1)
+    exec('git pull https://github.com/RGIIS/InventorySystem.git',$output,$success);
+    dd($output);
+    if($success)
         {
-            return response($output[0],200);
+            return response($output,200);
            
         }
     else{

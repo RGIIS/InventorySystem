@@ -143,9 +143,6 @@
   <ul></ul>
   <div  id='updateAlert' class="alert alert-success alert-dismissible fade show form-inline" role="alert" hidden>
     <span id='updateMessage'></span>
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
   </div>
   <div id='newUpdate'  class="mx-3 alert alert-primary text-center form-inline" role="alert" hidden>
     New : Version&nbsp;<span class="mr-3" id="newVersion">0</span>
