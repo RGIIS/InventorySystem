@@ -39,8 +39,8 @@
     </div>
   </div>
     <div class="wrapper ">
-     
       <div class="sidebar" data-color="purple" data-background-color="white" >
+        
         <!--
           Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
   
@@ -95,6 +95,7 @@
        
       </div>
       <div class="main-panel">
+        
         <!-- Navbar -->
         <nav class="navbar navbar-expand-lg navbar-primary bg-primary navbar-absolute fixed-top ">
           <div class="container-fluid">
@@ -130,8 +131,19 @@
             </div>
           </div>
         </nav>
+        
         <!-- End Navbar -->
 @yield('content')
+<nav id='newUpdate' class="m-0 navbar fixed-bottom" style="background-color:transparent !important; box-shadow:none !important;" hidden>
+  <ul></ul>
+  <div class="mx-3 alert alert-primary text-center form-inline" role="alert">
+    New : Version&nbsp;<span class="mr-3" id="newVersion">0</span>
+    <button id='getUpdate' type="button" class="btn btn-info">Update</button>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+</nav>
 
 
 <script src={{ asset("/js/core/jquery.min.js") }}></script>

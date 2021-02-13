@@ -436,8 +436,43 @@ public function removeAdmin(Request $request)
 
 }
 
+public function checkUpdate()
+{   
+    exec('git diff origin/master:version.json master:version.json', $output,$success);
+    
+    if($success!=1)
+    {
+        
+        $resMessage='';
+        $newVersion;
+        $currentVersion;
+        $hasNewVersion = false;
+        if(count($output)>0)
+        {
+            $newVersion = json_decode('{'.substr($output[6],strpos($output[6],'"')).'}');
+            $currentVersion = json_decode('{'.substr($output[7],strpos($output[7],'"')).'}');
+            $hasNewVersion = true;
+        }
+        else
+        {
+            $resMessage = 'No Update Available';
+        }
+        return response()->json([
+            'hasNewVersion'=>$hasNewVersion,
+            'currentVersion'=>$currentVersion->version,
+            'newVersion'=>$newVersion->version
+        ],200);
+    }
+    else
+    {
+        return response('error',400);
+    }
+}
+
 public function updateVersion()
 {
+   
+  
     if(exec('git pull https://github.com/RGIIS/InventorySystem.git',$output))
         {
             return response($output[0],200);

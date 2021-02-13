@@ -34,13 +34,15 @@ Route::get('/sales/monthly',[App\Http\Controllers\SalesController::class, 'showM
 Route::get('/sales/daily',[App\Http\Controllers\SalesController::class, 'showDailySales'])->name('daily_sales');
 Route::get('/sales/detailed',[App\Http\Controllers\SalesController::class, 'showDetailedSales'])->name('detailed_sales');
 Route::get('/accounts',[App\Http\Controllers\UserController::class, 'accounts'])->name('accounts');
-Route::get('/updateVersion',[App\Http\Controllers\UserController::class, 'updateVersion'])->name('updateVersion');
+
 Route::get('/logs',[App\Http\Controllers\UserController::class, 'logs'])->name('logs');
 
 //FUNCTIONS
 Route::post('/additem',[App\Http\Controllers\UserController::class, 'additem']);
 Route::post('/updateitem',[App\Http\Controllers\UserController::class, 'updateitem']);
 Route::post('/removeitem',[App\Http\Controllers\UserController::class, 'removeitem']);
+Route::get('/updateVersion',[App\Http\Controllers\UserController::class, 'updateVersion'])->name('updateVersion');
+Route::get('/checkUpdate',[App\Http\Controllers\UserController::class, 'checkUpdate'])->name('checkUpdate');
 Route::get('/logout',function(){
     
     $log = new Log;
