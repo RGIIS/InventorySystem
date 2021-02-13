@@ -34,7 +34,7 @@
 <body class="">
   <div class="overlay" id="overlay" hidden>
     <div class="overlay__inner" >
-        <div class="overlay__content" ><span class="spinner"></span> <h3 class="text-center" style="color:white !important; padding:0px !important;">Checking for update... Please wait</h3></div>
+        <div class="overlay__content" ><span class="spinner"></span> <h3 id='loadingMsg' class="text-center" style="color:white !important; padding:0px !important;">Checking for update... Please wait</h3></div>
         
     </div>
   </div>
@@ -134,9 +134,20 @@
         
         <!-- End Navbar -->
 @yield('content')
-<nav id='newUpdate' class="m-0 navbar fixed-bottom" style="background-color:transparent !important; box-shadow:none !important;" hidden>
+{{-- MESSAGE FOR UPDATES --}}
+            
+
+
+<nav  class="m-0 navbar fixed-bottom" style="background-color:transparent !important; box-shadow:none !important;">
+ 
   <ul></ul>
-  <div class="mx-3 alert alert-primary text-center form-inline" role="alert">
+  <div  id='updateAlert' class="alert alert-success alert-dismissible fade show form-inline" role="alert" hidden>
+    <span id='updateMessage'></span>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div id='newUpdate'  class="mx-3 alert alert-primary text-center form-inline" role="alert" hidden>
     New : Version&nbsp;<span class="mr-3" id="newVersion">0</span>
     <button id='getUpdate' type="button" class="btn btn-info">Update</button>
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">

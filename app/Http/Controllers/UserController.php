@@ -444,24 +444,30 @@ public function checkUpdate()
     {
         
         $resMessage='';
-        $newVersion;
-        $currentVersion;
+        $newVersion='';
+        $currentVersion='';
         $hasNewVersion = false;
         if(count($output)>0)
         {
             $newVersion = json_decode('{'.substr($output[6],strpos($output[6],'"')).'}');
             $currentVersion = json_decode('{'.substr($output[7],strpos($output[7],'"')).'}');
             $hasNewVersion = true;
+            return response()->json([
+                'hasNewVersion'=>$hasNewVersion,
+                'currentVersion'=>$currentVersion->version,
+                'newVersion'=>$newVersion->version
+            ],200);
         }
         else
         {
+            $hasNewVersion = false;
             $resMessage = 'No Update Available';
+            return response()->json([
+                'message'=>$resMessage,
+                'hasNewVersion'=>$hasNewVersion
+            ]);
         }
-        return response()->json([
-            'hasNewVersion'=>$hasNewVersion,
-            'currentVersion'=>$currentVersion->version,
-            'newVersion'=>$newVersion->version
-        ],200);
+       
     }
     else
     {
@@ -473,7 +479,7 @@ public function updateVersion()
 {
    
   
-    if(exec('git pull https://github.com/RGIIS/InventorySystem.git',$output))
+    if(exec('git pull origin/master ',$output)!=1)
         {
             return response($output[0],200);
            

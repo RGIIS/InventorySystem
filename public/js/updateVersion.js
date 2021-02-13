@@ -19,8 +19,10 @@ function checkUpdate(){
 
         success: function(response){
             overlayLoading.hidden=true;
+            
            if(response.hasNewVersion)
            {
+           
             getUpdateBtn.addEventListener('click',function(){
                 getUpdate();
             })
@@ -28,7 +30,9 @@ function checkUpdate(){
             newVersionNumber.innerHTML = response.newVersion;
            }
            else{
-               console.log('no new version')
+            
+               document.getElementById('updateAlert').hidden=false;
+               document.getElementById('updateMessage').innerHTML = response.message;
            }
         },
         error: function(response)
@@ -48,6 +52,8 @@ function checkUpdate(){
 function getUpdate()
 {
     overlayLoading.hidden=false;
+    loadingMsg = document.getElementById('loadingMsg');
+    loadingMsg.innerHTML = 'Getting Update .... Please Wait';
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -61,8 +67,8 @@ function getUpdate()
         data:{},
 
         success: function(response){
-            overlayLoading.hidden=true;
-          console.log(response);
+        overlayLoading.hidden=true;
+        console.log(response);
         },
         error: function(response)
         {
