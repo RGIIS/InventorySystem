@@ -81,4 +81,5 @@ function getUpdate()
             alert('Something Went Wrong')
         }
     });
+    setTimeout(function(){document.getElementById('updateAlert').hidden=true},5000);
 }

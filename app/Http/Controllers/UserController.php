@@ -438,7 +438,8 @@ public function removeAdmin(Request $request)
 
 public function checkUpdate()
 {   
-    exec('git diff origin/master:version.json master:version.json', $output,$success);
+    exec('git fetch');
+    exec(' git diff origin/master:version.json master:version.json', $output,$success);
     
     if($success!=1)
     {
@@ -479,10 +480,10 @@ public function updateVersion()
 {
    
     exec('git pull https://github.com/RGIIS/InventorySystem.git',$output,$success);
-    dd($output);
-    if($success)
+    if($output>0)
         {
-            return response($output,200);
+
+            return response('Successfully Updated',200);
            
         }
     else{
