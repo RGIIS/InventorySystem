@@ -62,13 +62,13 @@
 
                     <div class="row mt-5">
                       <div class="col-xl-2 col-lg-3 pr-0">
-                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#clearSalesModal" id="clearSales">Clear Sales</button>
+                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#clearSalesModal" id="clearSales"><i class="fa fa-trash"></i> Clear Sales</button>
                       </div>
                       <div class="col-xl-2 col-lg-3 pl-0">
-                        <button type="button" class="btn btn-warning"  id="removeSelected">Remove Selected</button>
+                        <button type="button" class="btn btn-warning"  id="removeSelected"><i class="fa fa-remove"></i> Remove Selected</button>
                       </div>
                       <div class="col-xl-2 col-lg-3">
-                        <button type="button" class="btn btn-success" id="importExcel">Export as excel</button>
+                        <button type="button" class="btn btn-success" id="importExcel" onclick="exportSales()"><i class="fa fa-download"></i> Export as excel</button>
                       </div>
                     </div>
 
@@ -131,7 +131,11 @@
                            
                           </tbody>
                         </table>
+                        <div class="d-flex flex-row bd-highlight mt-3 justify-content-center">
+                          <div>{{$itemSold->links()}}</div>
+                         </div>
                       </div>
+                      
                     </div>
                     
                   </div>
@@ -269,6 +273,19 @@
       
     });
 
+function exportSales()
+{
+  let url = window.location.href.toString();
+  let index = url.indexOf('?');
+  let parameter = '';
+  if(index>0)
+  {
+ parameter = url.slice(index,url.length);
+  }
+
+  let path = '/download'+parameter;
+  location.replace(path);
+}
 
     </script>
 @endsection

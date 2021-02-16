@@ -66,6 +66,9 @@
           <div class="ripple-container"></div>
         </button>
       </div>
+      <div class="col-xl-2 col-lg-3">
+        <a role="button" class="btn btn-success" href="/export/inventory" id="exportExcel"><i class="fa fa-download"></i> Export INVENTORY as excel</a>
+      </div>
       <div class="card-body">
         <div class="table-responsive">
           <table class="table">

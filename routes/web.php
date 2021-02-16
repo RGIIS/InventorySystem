@@ -43,6 +43,8 @@ Route::post('/updateitem',[App\Http\Controllers\UserController::class, 'updateit
 Route::post('/removeitem',[App\Http\Controllers\UserController::class, 'removeitem']);
 Route::get('/updateVersion',[App\Http\Controllers\UserController::class, 'updateVersion'])->name('updateVersion');
 Route::get('/checkUpdate',[App\Http\Controllers\UserController::class, 'checkUpdate'])->name('checkUpdate');
+Route::get('/download',[App\Http\Controllers\SalesController::class, 'downloadExcel'])->name('download');
+Route::get('/export/inventory',[App\Http\Controllers\UserController::class, 'exportInventory'])->name('exportInventory');
 Route::get('/logout',function(){
     
     $log = new Log;

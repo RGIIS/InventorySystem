@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\ItemSold;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
+use App\Exports\SalesExport;
+use Excel;
 
 class SalesController extends Controller
 {
@@ -122,13 +124,14 @@ class SalesController extends Controller
                
             }
             $startOfMonth = $now->startOfYear()->addMonth($i)->startOfMonth()->toDateTimeString();
-            $endOfMonth = $now->startOfYear()->addMonth($i)->endOfMonth()->toDateTimeString();
             
+            $endOfMonth = $now->startOfYear()->addMonth($i)->endOfMonth()->toDateTimeString();
+           
           $itemSoldQuantity = ItemSold::whereBetween('created_at',[$startOfMonth,$endOfMonth])->sum('quantity');
           $itemSoldTotal = ItemSold::whereBetween('created_at',[$startOfMonth,$endOfMonth])->sum('total');
             // $itemSoldQuantity = ItemSold::whereBetween('created_at',[$startOfMonth->subMonth($i)->subDay(1)->startOfMonth()->toDateTimeString(),$endOfMonth->subMonth($i)->subDay(1)->endOfMonth()->toDateTimeString()])->sum("quantity");
             // $itemSoldTotal = ItemSold::whereBetween('created_at',[$startOfMonth,$endOfMonth])->sum("total");
-           $monthName = Carbon::now()->addMonth($i)->startOfMonth()->format('F');
+           $monthName = $now->startOfYear()->addMonth($i)->format('F');
                 //     $optionString = Carbon::now()->subMonth($i)->startOfMonth()->format('F j, Y')." - ".Carbon::now()->subMonth($i)->endOfMonth()->format('F j, Y');
             // }
             array_push($monthlyArr,[
@@ -219,6 +222,7 @@ class SalesController extends Controller
         {
              return redirect()->route('inventory');
         }
+        $query =[];
         
         // $dates = (array) null;
         // $itemSold = (array) null;
@@ -230,17 +234,22 @@ class SalesController extends Controller
         $endDate = $request->endDate;
         }
         $itemSold = ItemSold::whereBetween('created_at',[$startDate." 00:00:00",$endDate." 23:59:59"]);
+        $query = array_merge($query,['startDate'=>$startDate,'endDate'=>$endDate]);
+        
        if($request->filled('customer'))
        {
-        $itemSold = $itemSold->where('costumer_name',$request->customer);
+        $itemSold = $itemSold->where('costumer_name','like','%'.$request->customer.'%');
+        $query = array_merge($query,['customer'=>$request->customer]);
        }
        if($request->filled('receipt'))
        {
         $itemSold = $itemSold->where('receipt_number',$request->receipt);
+        $query = array_merge($query,['receipt'=>$request->receipt]);
        }
        if($request->filled('cashier'))
        {
-        $itemSold = $itemSold->where('cashier',$request->cashier);
+        $itemSold = $itemSold->where('cashier','like','%'.$request->cashier.'%');
+        $query = array_merge($query,['cashier'=>$request->cashier]);
        }
 
         
@@ -255,9 +264,11 @@ class SalesController extends Controller
         //     array_push($itemSold,$itemSoldData->toArray());
 
         // }
+      
         $itemSold = $itemSold->latest('created_at')->simplePaginate(10);
-       
+       $itemSold->appends($query);
         return view('detailedSales')->with('itemSold',$itemSold);
+
 
     }
 
@@ -289,6 +300,15 @@ class SalesController extends Controller
         }
         
         $itemSold = ItemSold::truncate();
+    }
+    public function downloadExcel(Request $request)
+    {
+        $sales = new SalesExport($request);
+       $date = Carbon::now()->toDateString();
+        // dd($sales->collection());
+       
+        return Excel::download($sales,'sales'.$date.'.xlsx');
+
     }
 
 }

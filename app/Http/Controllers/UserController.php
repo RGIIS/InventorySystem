@@ -11,6 +11,8 @@ use App\Models\Inventory;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use App\Models\Log;
+use App\Exports\InventoryExport;
+use Excel;
 
 
 class UserController extends Controller
@@ -490,6 +492,13 @@ public function updateVersion()
         return response('Error',400);
     }
         
+}
+
+public function exportInventory()
+{
+    $inventory = new InventoryExport;
+    $date = Carbon::now()->toDateString();
+    return Excel::download($inventory,'inventory'.$date.'.xls');
 }
 
 }
