@@ -8,8 +8,10 @@ use Carbon\Carbon;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use Maatwebsite\Excel\Concerns\WithStyles;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class SalesExport implements FromCollection, WithHeadings,ShouldAutoSize
+class SalesExport implements FromCollection, WithHeadings,ShouldAutoSize,WithStyles
 {
     /**
     * @return \Illuminate\Support\Collection
@@ -64,5 +66,11 @@ class SalesExport implements FromCollection, WithHeadings,ShouldAutoSize
             'Date'
 
         ];
+    }
+
+    public function styles(Worksheet $sheet)
+    {
+        $sheet->getStyle(1)->getFont()->setBold(true);
+        $sheet->getStyle('A')->getFont()->setBold(true);
     }
 }
